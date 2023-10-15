@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class CameraRaycast : MonoBehaviour
 {
-
+    [SerializeField] ParticleSystem particleSystem;
     RaycastHit rayHit;
     PolygonCreator selected = null;
     void Update()
@@ -24,13 +24,14 @@ public class CameraRaycast : MonoBehaviour
                         {
                             selected = component;
                             component.meshRenderer.material.color = Color.black;
-                        } else if(selected.numVertices == component.numVertices && selected.polygonType == component.polygonType)
+                        } else if(selected.numVertices == component.numVertices && selected.polygonType == component.polygonType 
+                            && selected.gameObject.transform.position!=component.gameObject.transform.position)
                         {
                             selected.meshRenderer.material.color = Color.white  ;
                             component.CreatePolygon(selected.numVertices+1, selected.polygonType);
-                            component.ParticlePlay();
+                            particleSystem.gameObject.transform.position = component.transform.position;
+                            particleSystem.Play();
                             selected.CreatePolygon(Random.Range(3, 7), (PolygonType)Random.Range(0, 3));
-
                             selected = null;
                             //TO DO 
                         }

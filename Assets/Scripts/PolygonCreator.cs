@@ -8,7 +8,6 @@ public enum PolygonType
 public class PolygonCreator : MonoBehaviour
 {
     [SerializeField] private Material material;
-    [SerializeField] private ParticleSystem particleSystem;
     [HideInInspector] public MeshRenderer meshRenderer;
     private float radius = 0.3f;
     public int numVertices;
@@ -103,9 +102,5 @@ public class PolygonCreator : MonoBehaviour
     {
         vertices[numVertices-1] += new Vector3(0.1f, 0, 0);
         polygonType = PolygonType.C;
-    }
-    public void ParticlePlay()
-    {
-        particleSystem.Play();
     }
 }
