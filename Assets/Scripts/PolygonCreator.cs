@@ -1,32 +1,60 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
+public enum PolygonType
+{
+   A, B, C, Count
+};
 public class PolygonCreator : MonoBehaviour
 {
     [SerializeField] private Material material;
-    [SerializeField] private float radius = 5;
-    [SerializeField] private int numVertices = 5;
+    [SerializeField] private ParticleSystem particleSystem;
+    [HideInInspector] public MeshRenderer meshRenderer;
+    private float radius = 0.3f;
+    public int numVertices;
+    Vector3[] vertices;
+    Mesh mesh;
+    MeshCollider meshCollider;
+    public PolygonType polygonType;
 
-    void Start()
+    void Awake()
     {
-        // Add required components to display a mesh.
         MeshFilter meshFilter = gameObject.AddComponent<MeshFilter>();
-        MeshRenderer meshRenderer = gameObject.AddComponent<MeshRenderer>();
-        Mesh mesh = new Mesh();
-
+        meshRenderer = gameObject.AddComponent<MeshRenderer>();
+        meshCollider = gameObject.AddComponent<MeshCollider>();
+        mesh = new Mesh();
         meshRenderer.material = material;
         meshFilter.mesh = mesh;
 
-        // Angle of each segment in radians.
+        CreateVertices(Random.Range(3, 7));
+        polygonType = (PolygonType)Random.Range(0, 3);
+        SetRandomShape(polygonType);
+        CreateTriangles();
+
+    }
+    public void CreatePolygon(int numOfVertices, PolygonType polygonType)
+    {
+        mesh.Clear();
+        CreateVertices(numOfVertices);
+        SetRandomShape(polygonType);
+        CreateTriangles();
+    }
+    private void CreateVertices(int numOfVertices)
+    {
+        numVertices = numOfVertices;
         float angle = 2 * Mathf.PI / numVertices;
 
         // Create the vertices around the polygon.
-        Vector3[] vertices = new Vector3[numVertices];
+        vertices = new Vector3[numVertices];
         for (int i = 0; i < numVertices; i++)
         {
             vertices[i] = new Vector3(Mathf.Sin(i * angle), 0, Mathf.Cos(i * angle)) * radius;
-        }
-        mesh.vertices = vertices;
 
+        }
+    }
+    private void CreateTriangles()
+    {
+        mesh.vertices = vertices;
         // The triangle vertices must be done in clockwise order.
         int[] triangles = new int[3 * (numVertices - 2)];
         for (int i = 0; i < numVertices - 2; i++)
@@ -36,5 +64,48 @@ public class PolygonCreator : MonoBehaviour
             triangles[(3 * i) + 2] = i + 2;
         }
         mesh.triangles = triangles;
+        meshCollider.sharedMesh = mesh;
+        meshCollider.convex = true;
+    }
+    private void SetRandomShape(PolygonType polygonType)
+    {
+        switch (polygonType)
+        {
+            case PolygonType.A:
+            {
+                PolygonShapeA();
+                break;
+            }
+            case PolygonType.B:
+            {
+                PolygonShapeB();
+                break;
+            }
+            case PolygonType.C:
+            {
+                PolygonShapeC();
+                break;
+            }
+        }
+
+
+    }
+    private void PolygonShapeA()
+    {
+        polygonType = PolygonType.A;
+    }
+    private void PolygonShapeB() 
+    { 
+        vertices[0] += new Vector3(0.1f, 0, 0.1f);
+        polygonType = PolygonType.B;
+    }
+    private void PolygonShapeC()
+    {
+        vertices[numVertices-1] += new Vector3(0.1f, 0, 0);
+        polygonType = PolygonType.C;
+    }
+    public void ParticlePlay()
+    {
+        particleSystem.Play();
     }
 }
