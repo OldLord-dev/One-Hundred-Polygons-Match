@@ -4,21 +4,18 @@ using System.Collections.Generic;
 
 public class CameraRaycast : MonoBehaviour
 {
-    [SerializeField] ParticleSystem particleSystem;
-    RaycastHit rayHit;
-    PolygonCreator selected = null;
+    [SerializeField] private ParticleSystem polygonParticleSystem;
+    private RaycastHit rayHit;
+    private PolygonCreator selected = null;
     void Update()
     {
-
-        // now we check if the mouse left button was pressed
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            // we cast a ray from camera to tho our mouse, to see if our mouse is actually over any movable object
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out rayHit))
             {
                 if (rayHit.collider.CompareTag("Polygon"))
                 {             
-                    if(rayHit.collider.TryGetComponent<PolygonCreator>(out PolygonCreator component))
+                    if(rayHit.collider.TryGetComponent(out PolygonCreator component))
                     {
                         if(selected == null)
                         {
@@ -29,8 +26,8 @@ public class CameraRaycast : MonoBehaviour
                         {
                             selected.meshRenderer.material.color = Color.white  ;
                             component.CreatePolygon(selected.numVertices+1, selected.polygonType);
-                            particleSystem.gameObject.transform.position = component.transform.position;
-                            particleSystem.Play();
+                            polygonParticleSystem.gameObject.transform.position = component.transform.position;
+                            polygonParticleSystem.Play();
                             selected.CreatePolygon(Random.Range(3, 7), (PolygonType)Random.Range(0, 3));
                             selected = null;
                             //TO DO 
@@ -40,13 +37,9 @@ public class CameraRaycast : MonoBehaviour
                             selected.meshRenderer.material.color = Color.white;
                             selected = component;
                             component.meshRenderer.material.color = Color.black;
-                        }
-                            
-
-                        
+                        }   
                     }
                 }
-
             }
         }
     }

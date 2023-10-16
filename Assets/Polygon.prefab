@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3614016444510981746}
   - component: {fileID: 5312389332138380617}
+  - component: {fileID: 5638452727347152659}
   m_Layer: 0
   m_Name: Polygon
   m_TagString: Polygon
@@ -45,7 +46,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: 5119fdf98093ca344b457d64f69c96fe, type: 2}
-  particleSystem: {fileID: 0}
   meshRenderer: {fileID: 0}
   numVertices: 0
   polygonType: 0
+--- !u!95 &5638452727347152659
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3598782539830638072}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ee5c7516f3c89434193831110328dce2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

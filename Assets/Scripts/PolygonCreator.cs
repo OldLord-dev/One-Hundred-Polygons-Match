@@ -4,7 +4,7 @@ using UnityEngine.Rendering;
 public enum PolygonType
 {
    A, B, C, Count
-};
+}
 public class PolygonCreator : MonoBehaviour
 {
     [SerializeField] private Material material;

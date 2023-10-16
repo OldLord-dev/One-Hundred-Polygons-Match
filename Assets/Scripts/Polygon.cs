@@ -4,16 +4,10 @@ using UnityEngine;
 
 public class Polygon : MonoBehaviour
 {
-    public int vertices => mesh.vertexCount;
+    public int Vertices => mesh.vertexCount;
     public string polygonType;
     public Vector3 position;
 
     private Mesh mesh;
-
-    void Start()
-    {
-
-    }
-
 
 }
