@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using Unity.VisualScripting;
 
 namespace TMPro.Examples
 {
@@ -16,11 +16,10 @@ namespace TMPro.Examples
         }
 
 
-        void Start()
+        void OnEnable()
         {
             StartCoroutine(AnimateVertexColors());
         }
-
 
         /// <summary>
         /// Method to animate vertex colors of a TMP Text object.
@@ -44,7 +43,7 @@ namespace TMPro.Examples
                 // If No Characters then just yield and wait for some text to be added
                 if (characterCount == 0)
                 {
-                    yield return new WaitForSeconds(0.25f);
+                    yield return new WaitForSecondsRealtime(0.25f);
                     continue;
                 }
 
@@ -76,7 +75,7 @@ namespace TMPro.Examples
 
                 currentCharacter = (currentCharacter + 1) % characterCount;
 
-                yield return new WaitForSeconds(0.05f);
+                yield return new WaitForSecondsRealtime(0.05f);
             }
         }
 

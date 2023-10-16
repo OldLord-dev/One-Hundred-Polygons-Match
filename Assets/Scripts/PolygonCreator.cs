@@ -11,16 +11,18 @@ public class PolygonCreator : MonoBehaviour
     [HideInInspector] public MeshRenderer meshRenderer;
     private float radius = 0.3f;
     public int numVertices;
-    Vector3[] vertices;
-    Mesh mesh;
-    MeshCollider meshCollider;
+    private Vector3[] vertices;
+    private Mesh mesh;
+    private MeshCollider meshCollider;
+    private MeshFilter meshFilter;
+    private Animator animator;
     public PolygonType polygonType;
 
-    void Awake()
+    private void OnEnable()
     {
-        MeshFilter meshFilter = gameObject.AddComponent<MeshFilter>();
-        meshRenderer = gameObject.AddComponent<MeshRenderer>();
-        meshCollider = gameObject.AddComponent<MeshCollider>();
+        animator.speed = Random.Range(0.5f, 1f);
+
+        
         mesh = new Mesh();
         meshRenderer.material = material;
         meshFilter.mesh = mesh;
@@ -29,6 +31,13 @@ public class PolygonCreator : MonoBehaviour
         polygonType = (PolygonType)Random.Range(0, 3);
         SetRandomShape(polygonType);
         CreateTriangles();
+    }
+    void Awake()
+    {
+        animator = GetComponent<Animator>();
+        meshFilter = gameObject.AddComponent<MeshFilter>();
+        meshRenderer = gameObject.AddComponent<MeshRenderer>();
+        meshCollider = gameObject.AddComponent<MeshCollider>();
 
     }
     public void CreatePolygon(int numOfVertices, PolygonType polygonType)
@@ -48,7 +57,6 @@ public class PolygonCreator : MonoBehaviour
         for (int i = 0; i < numVertices; i++)
         {
             vertices[i] = new Vector3(Mathf.Sin(i * angle), 0, Mathf.Cos(i * angle)) * radius;
-
         }
     }
     private void CreateTriangles()
@@ -86,7 +94,6 @@ public class PolygonCreator : MonoBehaviour
                 break;
             }
         }
-
 
     }
     private void PolygonShapeA()

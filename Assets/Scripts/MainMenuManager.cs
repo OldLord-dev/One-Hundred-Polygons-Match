@@ -22,4 +22,9 @@ public class MainMenuManager : MonoBehaviour
     {
         GameManager.instance.UpdateGameState(GameState.Game);
     }
+
+    public void OnExitButtonPressed()
+    {
+        GameManager.instance.ExitGame();
+    }
 }
